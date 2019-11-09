@@ -41,8 +41,8 @@ namespace zum.Objects
     public class MultiplayerLobby
     {
         public short Id { get; private set; }
-        public int Host { get; private set; }
-        public int Creator { get; private set; }
+        public int Host { get; set; }
+        public int Creator { get; set; }
         public int BeatmapId { get; set; }
         public int Mods { get; set; }
         public int Seed { get; set; } // For Mania Random
@@ -74,6 +74,46 @@ namespace zum.Objects
         {
             ReadMatch(Data);
             Global.Matches.Add(this);
+        }
+
+        public bool AddPlayer(Player p, string password)
+        {
+            if (password != Password) return false;
+            for (int i = 0; i < 16; i++)
+            {
+                if ((Slots[i].Status & 124) == 0 && Slots[i].User == null)
+                {
+                    Players.Add(p);
+                    Slots[i].User = p;
+                    Slots[i].Status = 4;
+                    p.Match = this;
+                    Global.LeaveLobby(p);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void Update()
+        {
+            Packet p = this.Packet(26);
+            Broadcast(p);
+            for (int i = 0; i < Global.Lobby.Count; i++)
+                 Global.Lobby[i].AddQueue(Packet(26));
+        }
+
+        public void Broadcast(Packet p)
+        {
+            for (int i = 0; i < Players.Count; i++)
+                Players[i].AddQueue(p);
+        }
+
+        public void BroadcastPlaying(Packet p)
+        {
+            if (!MatchRunning) return;
+            for (int i = 0; i < 16; i++)
+                if (Slots[i].User != null && Slots[i].Status == 32)
+                    Slots[i].User.AddQueue(p);
         }
 
         public void ReadMatch(CustomReader r)

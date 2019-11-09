@@ -148,6 +148,9 @@ namespace zum
                         case 30:
                             Global.JoinLobby(p);
                             break;
+                        case 31:
+                            CreateMatch.Handle(p, Data);
+                            break;
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);
                             break;
