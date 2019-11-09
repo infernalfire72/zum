@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
 using System.Threading.Tasks;
+using zum.Events;
 using zum.Packets;
 
 namespace zum.Objects
@@ -41,7 +42,6 @@ namespace zum.Objects
         public string Password { get; set; }
         public string Token { get; }
         public int Id { get; }
-
         public byte IngamePrivileges { get; set; } = 21; // Developer Perms for now
         public bool IsAdmin => (IngamePrivileges & 16) != 0;
         public byte Country { get; set; } = 245;
@@ -147,6 +147,11 @@ namespace zum.Objects
                 if (Spectators[i] != p)
                     Spectators[i].AddQueue(Packets.Packets.IrcMessage(Content, p.Username, "#spectator", p.Id));
         }
+        public void SendSpectator(Packet pack)
+        {
+            for (int i = 0; i < Spectators.Count; i++)
+                Spectators[i].AddQueue(pack);
+        }
 
         public static void RemovePlayer(Player p)
         {
@@ -159,7 +164,7 @@ namespace zum.Objects
                 if (p.Spectators[i] != null)
                     p.Spectators[i].Spectating = null;
             // Remove from People spectated
-        // if (p.Spectating != null) StopSpectateEvent.Handle(p);
+            if (p.Spectating != null) StopSpectating.Handle(p);
             // Remove from Lobbies
             Global.LeaveLobby(p);
         // if (p.Match != null) LeaveMatch.Handle(p);

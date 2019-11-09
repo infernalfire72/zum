@@ -133,6 +133,15 @@ namespace zum
                         case 3:
                             await StatsUpdateRequest.Handle(p);
                             break;
+                        case 16:
+                            StartSpectating.Handle(p, Data);
+                            break;
+                        case 17:
+                            StopSpectating.Handle(p);
+                            break;
+                        case 18:
+                            SpectatorFrames.Handle(p, Data);
+                            break;
                         case 29:
                             Global.LeaveLobby(p);
                             break;
