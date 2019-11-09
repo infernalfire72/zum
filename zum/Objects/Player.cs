@@ -60,6 +60,7 @@ namespace zum.Objects
         public Player Spectating { get; set; }
         // public MultiplayerLobby Match { get; set; }
 
+        public bool Relax { get; set; } // note: block set when player is not in idle or afk
         public long Ping { get; set; }
         public bool Bot { get; private set; }
 

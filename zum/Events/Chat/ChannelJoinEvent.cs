@@ -11,7 +11,7 @@ namespace zum.Events
             if (Global.FindChannel(Channel)?.PlayerJoin(p) ?? false)
             {
                 p.AddQueue(Packets.Packets.SingleStringPacket(64, Channel));
-                Log.WriteLine($"%#00FF44%{p.Username} joined {Channel}");
+                Log.LogFormat($"%#00FF44%{p.Username} joined {Channel}");
                 return;
             }
             p.AddQueue(Packets.Packets.SingleStringPacket(66, Channel));
