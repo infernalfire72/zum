@@ -116,6 +116,29 @@ namespace zum.Objects
                     Slots[i].User.AddQueue(p);
         }
 
+        public Slot FindPlayerSlot(Player p) => FindPlayerSlotIndex(p) != -1 ? Slots[FindPlayerSlotIndex(p)] : null;
+
+        public int FindPlayerSlotIndex(Player p)
+        {
+            for (int i = 0; i < 16; i++)
+                if (Slots[i].User == p)
+                    return i;
+            return -1;
+        }
+
+        public void DestroyMatch()
+        {
+            Global.Matches.Remove(this);
+            Packet pack = Packets.Packets.SingleIntPacket(28, Id);
+            for (int i = 0; i > Players.Count; i++)
+            {
+                Players[i].AddQueue(pack);
+                Players[i].Match = null;
+            }
+            for (int i = 0; i < Global.Lobby.Count; i++)
+                Global.Lobby[i].AddQueue(pack);
+        }
+
         public void ReadMatch(CustomReader r)
         {
             if (!(r.BaseStream is MemoryStream)) return; // We do not support Reading here
