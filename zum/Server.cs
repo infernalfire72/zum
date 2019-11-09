@@ -157,6 +157,9 @@ namespace zum
                         case 78:
                             ChannelLeaveEvent.Handle(p, Data);
                             break;
+                        case 85:
+                            StatsUpdateRequest.Handle(p, Data);
+                            break;
                         default:
                             Log.LogFormat($"%#FFFF%Unhandled Packet {Id} with {Length}");
                             break;

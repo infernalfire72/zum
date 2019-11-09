@@ -155,7 +155,7 @@ namespace zum.Objects
 
         public static void RemovePlayer(Player p)
         {
-            Log.WriteLine($"{p.Username} logged out.");
+            Log.LogFormat($"%#00FF44%{p.Username} %#007cee%logged out.");
             Global.Players.Remove(p);
             // Remove from Channels
             for (int i = 0; i < p.Channels.Count; i++) p.Channels[i].PlayerLeave(p);
@@ -167,7 +167,7 @@ namespace zum.Objects
             if (p.Spectating != null) StopSpectating.Handle(p);
             // Remove from Lobbies
             Global.LeaveLobby(p);
-        // if (p.Match != null) LeaveMatch.Handle(p);
+            if (p.Match != null) LeaveMatch.Handle(p);
             // Tell other Players we went away
             Broadcast(Packets.Packets.LogoutPacket(p.Id));
         }

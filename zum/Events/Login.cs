@@ -90,7 +90,7 @@ namespace zum.Events
             Player.Broadcast(Packets.Packets.PresencePacket(p));
             Player.Broadcast(Packets.Packets.StatsPacket(p));
             Global.Players.Add(p);
-            Log.LogFormat($"%#007cee%{p.Username} logged in with Token %#00FF33%{p.Token}");
+            Log.LogFormat($"%#00FF44%{p.Username} %#007cee%logged in with Token %#00FF33%{p.Token}");
         }
     }
 }
