@@ -53,6 +53,10 @@ namespace zum.Events
             w.Write(Packets.Packets.StatsPacket(p));
 
             ctx.Response.Close();
+            Player.Broadcast(Packets.Packets.PresencePacket(p));
+            Player.Broadcast(Packets.Packets.StatsPacket(p));
+            Global.Players.Add(p);
+            Log.LogFormat($"%#007cee%{p.Username} logged in with Token %#00FF33%{p.Token}");
         }
     }
 }

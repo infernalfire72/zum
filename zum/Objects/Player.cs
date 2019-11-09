@@ -131,6 +131,10 @@ namespace zum.Objects
             }
         }
 
-
+        public static void Broadcast(Packet p)
+        {
+            for(int i = 0; i < Global.Players.Count; i++)
+                Global.Players[i].AddQueue(p);
+        }
     }
 }
