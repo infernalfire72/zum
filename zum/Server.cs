@@ -41,6 +41,7 @@ namespace zum
             listener.Prefixes.Clear();
             listener.Prefixes.Add($"http://*:{Port}/");
             listener.Start();
+            Log.LogFormat($"%#00FF00%> Now Listening on Port %#FFFF00%{Port}");
             Listen();
             return true;
         }
