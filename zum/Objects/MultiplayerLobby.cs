@@ -132,5 +132,50 @@ namespace zum.Objects
                 ReadMatch(r);
             }
         }
+
+        public Packet Packet(short id)
+        {
+            Packet p = new Packet(id);
+            using (MemoryStream ms = new MemoryStream())
+            using (CustomWriter w = new CustomWriter(ms))
+            {
+                w.Write(Id);
+                w.Write(MatchRunning);
+                w.Write(MatchType);
+                w.Write(Mods);
+                w.Write(Name);
+                w.Write(Password);
+                w.Write(BeatmapName);
+                w.Write(BeatmapId);
+                w.Write(BeatmapMd5);
+
+                for (int i = 0; i < 16; i++)
+                    w.Write(Slots[i].Status);
+
+                for (int i = 0; i < 16; i++)
+                    w.Write(Slots[i].Team);
+
+                for (int i = 0; i < 16; i++)
+                    if ((Slots[i].Status & 124) != 0 && Slots[i].User != null)
+                        w.Write(Slots[i].User.Id);
+
+                w.Write(Host);
+                w.Write(Gamemode);
+                w.Write(ScoreType);
+                w.Write(TeamType);
+                w.Write(FreeMod);
+
+                if (FreeMod)
+                {
+                    for (int i = 0; i < 16; i++)
+                    {
+                        w.Write(Slots[i].Mods);
+                    }
+                }
+
+                p.Data = ms.ToArray();
+            }
+            return p;
+        }
     }
 }

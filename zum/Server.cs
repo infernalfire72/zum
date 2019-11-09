@@ -145,6 +145,9 @@ namespace zum
                         case 29:
                             Global.LeaveLobby(p);
                             break;
+                        case 30:
+                            Global.JoinLobby(p);
+                            break;
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);
                             break;
