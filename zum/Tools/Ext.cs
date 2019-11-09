@@ -1,9 +1,12 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
+using zum.Packets;
 
 namespace zum.Tools
 {
     public static class Ext
     {
+        public static void Write(this BinaryWriter w, Packet p) => p.Write(w);
         public static byte[] WriteStringFast(string v, Encoding enc) // 140ns/op
         {
             if (v == null || v.Length == 0) return new byte[] { 0 };

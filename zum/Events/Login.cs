@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using zum.Objects;
+using zum.Tools;
 
 namespace zum.Events
 {
@@ -41,6 +42,15 @@ namespace zum.Events
 
             BinaryWriter w = new BinaryWriter(ctx.Response.OutputStream);
             Player p = new Player(Username, Id);
+
+            p.Password = Password;
+            ctx.Response.Headers["cho-token"] = p.Token;
+            w.Write(Packets.Packets.SingleIntPacket(5, Id));
+            w.Write(Packets.Packets.SingleIntPacket(75, 19));
+            w.Write(Packets.Packets.SingleStringPacket(24, $"Welcome to osu!Bancho!\r\nUsing züm 0.1a"));
+            await p.GetStats();
+
+
         }
     }
 }
