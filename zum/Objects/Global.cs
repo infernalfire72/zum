@@ -54,7 +54,7 @@ namespace zum
         public static void JoinLobby(Player p)
         {
             for(int i = 0; i < Matches.Count; i++)
-                p.AddQueue(Matches[i].Packet(27));
+                p.AddQueue(Matches[i].Packet(26));
             Lobby.Add(p);
         }
         public static void LeaveLobby(Player p) => Lobby.Remove(p);

@@ -1,4 +1,5 @@
 ﻿using zum.Objects;
+using zum.Packets;
 
 namespace zum.Events
 {
@@ -10,7 +11,13 @@ namespace zum.Events
             m.Creator = m.Host = p.Id;
             Log.WriteLine($"{p.Username} created a new MultiplayerLobby {m.Name}");
             m.AddPlayer(p, m.Password);
-            m.Update();
+
+            Packet pack = m.Packet(26);
+            m.Broadcast(pack);
+            for (int i = 0; i < Global.Lobby.Count; i++)
+                Global.Lobby[i].AddQueue(pack);
+            pack.Id = 36;
+            p.AddQueue(pack);
             p.AddQueue(Packets.Packets.SingleStringPacket(64, "#multiplayer"));
             p.AddQueue(Packets.Packets.ChannelAvailable("#multiplayer", "Multiplayer Game Channel", (short)m.Players.Count));
         }
