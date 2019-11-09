@@ -49,6 +49,8 @@ namespace zum.Events
             w.Write(Packets.Packets.SingleIntPacket(75, 19));
             w.Write(Packets.Packets.SingleStringPacket(24, $"Welcome to osu!Bancho!\r\nUsing züm 0.1a"));
             await p.GetStats();
+            w.Write(Packets.Packets.PresencePacket(p));
+            w.Write(Packets.Packets.StatsPacket(p));
 
             ctx.Response.Close();
         }

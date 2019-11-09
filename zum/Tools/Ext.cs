@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using zum.Packets;
 
@@ -20,6 +21,35 @@ namespace zum.Tools
             r[i++] = (byte)(vsize + 127);
             enc.GetBytes(v, 0, v.Length, r, i);
             return r;
+        }
+
+        public static byte[] WriteIntListFast(List<int> list) // 72ns/op old method: 250ns/op
+        {
+            if (list.Count == 0) return new byte[2];
+            byte[] res = new byte[2 + 4 * list.Count];
+            unsafe
+            {
+                fixed (byte* b = res)
+                    *((short*)b) = (short)list.Count;
+
+                for (int i = 2; i < res.Length; i += 4)
+                    fixed (byte* xb = &res[i])
+                        *((int*)xb) = list[(i - 2) / 4];
+            }
+            return res;
+        }
+
+        public static List<int> ReadIntListFast(byte[] Data) // 54ns/op old method: 170ns/op
+        {
+            if (Data[0] == 0 && Data[1] == 0) return new List<int>();
+            List<int> newl = new List<int>();
+            unsafe
+            {
+                for (int i = 2; i < Data.Length; i += 4)
+                    fixed (byte* xb = &Data[i])
+                        newl.Add(*((int*)xb));
+            }
+            return newl;
         }
     }
 }
