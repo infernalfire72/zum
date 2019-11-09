@@ -139,6 +139,25 @@ namespace zum.Objects
             return ids;
         }
 
+        public static void RemovePlayer(Player p)
+        {
+            //Log.WriteLine($"{p.Username} logged out.");
+            Global.Players.Remove(p);
+            // Remove from Channels
+            for (int i = 0; i < p.Channels.Count; i++) p.Channels[i].PlayerLeave(p);
+            // Remove from Spectators
+            for (int i = 0; i < p.Spectators.Count; i++)
+                if (p.Spectators[i] != null)
+                    p.Spectators[i].Spectating = null;
+            // Remove from People spectated
+        // if (p.Spectating != null) StopSpectateEvent.Handle(p);
+            // Remove from Lobbies
+        // Global.LeaveLobby(p);
+        // if (p.Match != null) LeaveMatch.Handle(p);
+            // Tell other Players we went away
+            Broadcast(Packets.Packets.LogoutPacket(p.Id));
+        }
+
         public static void Broadcast(Packet p)
         {
             for(int i = 0; i < Global.Players.Count; i++)
