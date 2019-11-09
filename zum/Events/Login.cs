@@ -3,6 +3,7 @@ using System.Data.Common;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using zum.Objects;
 
 namespace zum.Events
 {
@@ -39,7 +40,7 @@ namespace zum.Events
             }
 
             BinaryWriter w = new BinaryWriter(ctx.Response.OutputStream);
-            
+            Player p = new Player(Username, Id);
         }
     }
 }
