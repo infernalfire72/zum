@@ -77,6 +77,12 @@ namespace zum.Events
 
             ctx.Response.Close();
 
+            for (int i = 0; i < Global.Players.Count; i++)
+            {
+                w.Write(Packets.Packets.PresencePacket(Global.Players[i]));
+                w.Write(Packets.Packets.StatsPacket(Global.Players[i]));
+            }
+
             List<int> Friends = await p.GetFriends();
             if (Friends.Count > 0)
                 p.AddQueue(Packets.Packets.FriendListPacket(Friends));
