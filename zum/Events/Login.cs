@@ -38,9 +38,6 @@ namespace zum.Events
                 }
             }
 
-            
-
-
         }
     }
 }
