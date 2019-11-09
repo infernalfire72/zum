@@ -53,5 +53,14 @@ namespace zum
         public static List<Player> Lobby = new List<Player>();
 
         public static void LeaveLobby(Player p) => Lobby.Remove(p);
+
+        public static List<MultiplayerLobby> Matches = new List<MultiplayerLobby>();
+        public static MultiplayerLobby FindMatch(short id)
+        {
+            for (int i = 0; i < Matches.Count; i++)
+                if (Matches[i].Id == id)
+                    return Matches[i];
+            return null;
+        }
     }
 }

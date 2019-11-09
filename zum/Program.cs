@@ -6,7 +6,7 @@ namespace zum
     {
         static async Task Main(string[] args)
         {
-            Database.ConnectionString = "Server=localhost;Database=dbname;Uid=root;Pwd=password;";
+            Database.ConnectionString = "Server=localhost;Database=ripplef;Uid=root;Pwd=lol123;";
             await Database.connection.PingAsync();
             Global.SetupChannels();
             new Server(5001);

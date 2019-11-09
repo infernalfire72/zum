@@ -58,9 +58,8 @@ namespace zum.Objects
         public List<Channel> Channels { get; set; }
         public List<Player> Spectators { get; set; }
         public Player Spectating { get; set; }
-        // public MultiplayerLobby Match { get; set; }
-
-        public bool Relax { get; set; } // note: block set when player is not in idle or afk
+        public MultiplayerLobby Match { get; set; }
+        public bool Relax { get; set; } // note: block set when player is not in idle or afk (getscores most likely wants to set this)
         public long Ping { get; set; }
         public bool Bot { get; private set; }
 
