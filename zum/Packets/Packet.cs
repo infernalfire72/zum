@@ -7,6 +7,11 @@ namespace zum.Packets
         public short Id;
         public byte[] Data;
 
+        public Packet(short id)
+        {
+            Id = id;
+        }
+
         public void Write(BinaryWriter w)
         {
             w.Write(Id);

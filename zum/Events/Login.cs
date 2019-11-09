@@ -38,6 +38,8 @@ namespace zum.Events
                 }
             }
 
+            BinaryWriter w = new BinaryWriter(ctx.Response.OutputStream);
+            
         }
     }
 }
