@@ -55,7 +55,7 @@ namespace zum.Objects
         public int ActionMods { get; set; } = 0;
         public int ActionBeatmap { get; set; } = 0;
 
-        // public List<Channel> Channels { get; set; }
+        public List<Channel> Channels { get; set; }
         public List<Player> Spectators { get; set; }
         public Player Spectating { get; set; }
         // public MultiplayerLobby Match { get; set; }
