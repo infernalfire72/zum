@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using zum.Events;
 
 namespace zum
 {
@@ -74,6 +75,18 @@ namespace zum
         async Task ProcessAsync(HttpListenerContext ctx)
         {
             if (ctx.Request.UserAgent != "osu!") return;
+            if (ctx.Request.Url.AbsolutePath.StartsWith("/web/"))
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(ctx.Request.Headers["osu-token"]))
+            {
+                await Login.Handle(ctx);
+                return;
+            }
+
+
         }
     }
 }
