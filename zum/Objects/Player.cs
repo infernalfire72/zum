@@ -130,6 +130,14 @@ namespace zum.Objects
                 await GetStatsFixed(i);
             }
         }
+        public async Task<List<int>> GetFriends()
+        {
+            List<int> ids = new List<int>();
+            using (DbDataReader r = await Database.RunQuery($"SELECT user2 FROM users_relationships WHERE user1 = {Id};"))
+                while (r.Read())
+                    ids.Add(r.GetInt32(0));
+            return ids;
+        }
 
         public static void Broadcast(Packet p)
         {

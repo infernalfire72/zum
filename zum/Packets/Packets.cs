@@ -28,7 +28,39 @@ namespace zum.Packets
         #endregion
 
         #region Chat
+        public static Packet IrcMessage(string Message, string Sender, string Target, int User)
+        {
+            Packet p = new Packet(7);
+            using (MemoryStream ms = new MemoryStream())
+            using (CustomWriter w = new CustomWriter(ms))
+            {
+                w.Write(Sender);
+                w.Write(Message);
+                w.Write(Target);
+                w.Write(User);
+                p.Data = ms.ToArray();
+            }
+            return p;
+        }
 
+        public static Packet ChannelAvailable(string Name, string Topic, short Users)
+        {
+            Packet p = new Packet(65);
+            using (MemoryStream ms = new MemoryStream())
+            using (CustomWriter w = new CustomWriter(ms))
+            {
+                w.Write(Name);
+                w.Write(Topic);
+                w.Write(Users);
+                p.Data = ms.ToArray();
+            }
+            return p;
+        }
+
+        public static Packet ChannelAvailable(Channel c)
+        {
+            return ChannelAvailable(c.Name, c.Topic, c.Users);
+        }
         #endregion
 
         #region Presences and User Info

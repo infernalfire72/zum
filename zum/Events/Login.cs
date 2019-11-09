@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
 using System.Net;
@@ -51,8 +52,15 @@ namespace zum.Events
             await p.GetStats();
             w.Write(Packets.Packets.PresencePacket(p));
             w.Write(Packets.Packets.StatsPacket(p));
+            w.Write(Packets.Packets.NoDataPacket(89));
+            for (int i = 0; i < Global.Channels.Count; i++)
+                if (Global.Channels[i].AdminRead && !p.IsAdmin) continue;
+                else w.Write(Packets.Packets.ChannelAvailable(Global.Channels[i]));
 
             ctx.Response.Close();
+            List<int> Friends = await p.GetFriends();
+            if (Friends.Count > 0)
+                p.AddQueue(Packets.Packets.FriendListPacket(Friends));
             Player.Broadcast(Packets.Packets.PresencePacket(p));
             Player.Broadcast(Packets.Packets.StatsPacket(p));
             Global.Players.Add(p);

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace zum.Objects
 {
@@ -41,6 +39,15 @@ namespace zum.Objects
         {
             p.Channels.Remove(this);
             this.Players.Remove(p);
+        }
+
+        public void Message(Player p, string Content)
+        {
+            if (AdminWrite && !p.IsAdmin) return;
+            if (!Players.Contains(p)) return;
+            for (int i = 0; i < Players.Count; i++)
+                if (Players[i] != p && !Players[i].Bot)
+                    Players[i].AddQueue(Packets.Packets.IrcMessage(Content, p.Username, this.Name, p.Id));
         }
     }
 }
