@@ -76,7 +76,7 @@ namespace zum.Objects
             {
                 Token = Guid.NewGuid().ToString();
                 Stats = new UserStats[7];
-                // Channels = new List<Channel>();
+                Channels = new List<Channel>();
                 Spectators = new List<Player>();
                 Ping = DateTime.Now.Ticks;
                 Stream = new MemoryStream();

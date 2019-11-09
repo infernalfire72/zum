@@ -121,6 +121,10 @@ namespace zum
                     {
                         case 4: p.Ping = DateTime.Now.Ticks; break;
                         case 0:
+                            StatusUpdate.Handle(p, Data);
+                            break;
+                        case 63:
+                            ChannelJoinEvent.Handle(p, Data);
                             break;
                         default:
                             Log.LogFormat($"%#FFFF%Unhandled Packet {Id} with {Length}");
