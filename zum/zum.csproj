@@ -16,8 +16,4 @@
     <PackageReference Include="MySqlConnector" Version="0.61.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\Multiplayer\" />
-  </ItemGroup>
-
 </Project>
