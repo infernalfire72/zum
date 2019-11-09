@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using zum.Events;
+using zum.Objects;
 using zum.Tools;
 
 namespace zum
@@ -88,7 +89,7 @@ namespace zum
                 return;
             }
 
-            var p = Global.FindPlayer(ctx.Request.Headers["osu-token"]);
+            Player p = Global.FindPlayer(ctx.Request.Headers["osu-token"]);
 
             if (p == null) // if they arent part of the player collection, force them to relogin
             {
@@ -122,6 +123,9 @@ namespace zum
                         case 4: p.Ping = DateTime.Now.Ticks; break;
                         case 0:
                             StatusUpdate.Handle(p, Data);
+                            break;
+                        case 2:
+                            Player.RemovePlayer(p);
                             break;
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);
