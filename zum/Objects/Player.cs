@@ -139,6 +139,15 @@ namespace zum.Objects
             return ids;
         }
 
+        public void MessageSpectators(Player p, string Content)
+        {
+            if (!Spectators.Contains(p) && this != p) return;
+            if (this != p) this.AddQueue(Packets.Packets.IrcMessage(Content, p.Username, "#spectator", p.Id));
+            for (int i = 0; i < Spectators.Count; i++)
+                if (Spectators[i] != p)
+                    Spectators[i].AddQueue(Packets.Packets.IrcMessage(Content, p.Username, "#spectator", p.Id));
+        }
+
         public static void RemovePlayer(Player p)
         {
             Log.WriteLine($"{p.Username} logged out.");
