@@ -75,7 +75,7 @@ namespace zum.Objects
             if (!Bot)
             {
                 Token = Guid.NewGuid().ToString();
-                Stats = new UserStats[4];
+                Stats = new UserStats[7];
                 // Channels = new List<Channel>();
                 Spectators = new List<Player>();
                 Ping = DateTime.Now.Ticks;
@@ -102,7 +102,9 @@ namespace zum.Objects
         private static string[] modes = { "std", "taiko", "ctb", "mania" };
         public async Task GetStatsFixed(byte mode)
         {
-            using (DbDataReader r = await Database.RunQuery($"SELECT ranked_score_{modes[mode]}, playcount_{modes[mode]}, total_score_{modes[mode]}, avg_accuracy_{modes[mode]}/100, pp_{modes[mode]} FROM users_stats WHERE id = {Id} LIMIT 1"))
+            string table = mode > 3 ? "rx" : "users";
+            mode -= (byte)(mode > 3 ? 4 : 0);
+            using (DbDataReader r = await Database.RunQuery($"SELECT ranked_score_{modes[mode]}, playcount_{modes[mode]}, total_score_{modes[mode]}, avg_accuracy_{modes[mode]}/100, pp_{modes[mode]} FROM {table}_stats WHERE id = {Id} LIMIT 1"))
             {
                 if (r.Read())
                 {
@@ -114,7 +116,7 @@ namespace zum.Objects
                 }
             }
 
-            using (DbDataReader r = await Database.RunQuery($"SELECT COUNT(id) FROM users_stats WHERE pp_{modes[mode]} >= {Stats[mode].Performance}"))
+            using (DbDataReader r = await Database.RunQuery($"SELECT COUNT(id) FROM {table}_stats WHERE pp_{modes[mode]} >= {Stats[mode].Performance}"))
             {
                 if (r.Read())
                     Stats[mode].Rank = r.GetInt32(0);
