@@ -26,6 +26,22 @@ namespace zum.Tools
             enc.GetBytes(v, 0, v.Length, r, i);
             return r;
         }
+        public static string ReadStringFast(byte[] v, int i) // 82ns/op 
+        {
+            if (v[i++] != 11) return null;
+            int l = 0;
+            do
+            {
+                l += v[i] == 128 ? 127 : v[i];
+            } while ((v[i++] & 128) != 0);
+            unsafe
+            {
+                fixed (byte* ptr = &v[i])
+                {
+                    return new string((sbyte*)ptr, 0, l);
+                }
+            }
+        }
 
         public static byte[] WriteIntListFast(List<int> list) // 72ns/op old method: 250ns/op
         {
