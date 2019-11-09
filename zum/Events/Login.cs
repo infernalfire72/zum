@@ -41,6 +41,23 @@ namespace zum.Events
                 }
             }
 
+            if (DbPassword == null || Id == 0 || !BCrypt.Net.BCrypt.Verify(Password, DbPassword))
+            {
+                ctx.Response.Headers["cho-token"] = "no";
+                ctx.Response.OutputStream.Write(Packets.Packets.SingleIntPacket(5, -1));
+                ctx.Response.Close();
+                return;
+            }
+
+            if (Global.FindPlayerByName(Username) != null)
+            {
+                ctx.Response.Headers["cho-token"] = "no";
+                ctx.Response.OutputStream.Write(Packets.Packets.SingleStringPacket(24, "You are already logged in from another Client."));
+                ctx.Response.OutputStream.Write(Packets.Packets.SingleIntPacket(5, -2));
+                ctx.Response.Close();
+                return;
+            }
+
             BinaryWriter w = new BinaryWriter(ctx.Response.OutputStream);
             Player p = new Player(Username, Id);
 
