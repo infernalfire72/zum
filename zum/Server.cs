@@ -124,11 +124,23 @@ namespace zum
                         case 0:
                             StatusUpdate.Handle(p, Data);
                             break;
+                        case 1:
+                            IrcMessage.Handle(p, Data);
+                            break;
                         case 2:
                             Player.RemovePlayer(p);
                             break;
+                        case 3:
+                            await StatsUpdateRequest.Handle(p);
+                            break;
+                        case 29:
+                            Global.LeaveLobby(p);
+                            break;
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);
+                            break;
+                        case 78:
+                            ChannelLeaveEvent.Handle(p, Data);
                             break;
                         default:
                             Log.LogFormat($"%#FFFF%Unhandled Packet {Id} with {Length}");

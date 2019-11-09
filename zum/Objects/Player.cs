@@ -45,7 +45,7 @@ namespace zum.Objects
         public byte IngamePrivileges { get; set; } = 21; // Developer Perms for now
         public bool IsAdmin => (IngamePrivileges & 16) != 0;
         public byte Country { get; set; } = 245;
-        public byte Gamemode { get; set; } = 0;
+        public byte Gamemode { get; set; } = 0; // Ranges from [0; 6] Vanilla [0; 3] Relax [4; 6]
 
         public UserStats[] Stats { get; set; }
 
@@ -161,7 +161,7 @@ namespace zum.Objects
             // Remove from People spectated
         // if (p.Spectating != null) StopSpectateEvent.Handle(p);
             // Remove from Lobbies
-        // Global.LeaveLobby(p);
+            Global.LeaveLobby(p);
         // if (p.Match != null) LeaveMatch.Handle(p);
             // Tell other Players we went away
             Broadcast(Packets.Packets.LogoutPacket(p.Id));

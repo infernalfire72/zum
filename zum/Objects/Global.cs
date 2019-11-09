@@ -49,5 +49,9 @@ namespace zum
             AddChannel(new Channel("#admin", "Admin/Development Channel", false));
             AddChannel(new Channel("#lobby", "Multiplayer Lobby Channel/Discussion"));
         }
+
+        public static List<Player> Lobby = new List<Player>();
+
+        public static void LeaveLobby(Player p) => Lobby.Remove(p);
     }
 }
