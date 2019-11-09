@@ -141,7 +141,7 @@ namespace zum.Objects
 
         public static void RemovePlayer(Player p)
         {
-            //Log.WriteLine($"{p.Username} logged out.");
+            Log.WriteLine($"{p.Username} logged out.");
             Global.Players.Remove(p);
             // Remove from Channels
             for (int i = 0; i < p.Channels.Count; i++) p.Channels[i].PlayerLeave(p);
