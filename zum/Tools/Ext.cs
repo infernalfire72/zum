@@ -7,6 +7,10 @@ namespace zum.Tools
 {
     public static class Ext
     {
+        public static void Write(this Stream s, Packet p) {
+            using (BinaryWriter w = new BinaryWriter(s))
+                p.Write(w);
+        }
         public static void Write(this BinaryWriter w, Packet p) => p.Write(w);
         public static byte[] WriteStringFast(string v, Encoding enc) // 140ns/op
         {

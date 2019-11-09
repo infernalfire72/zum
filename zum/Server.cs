@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using zum.Events;
+using zum.Tools;
 
 namespace zum
 {
@@ -86,7 +88,49 @@ namespace zum
                 return;
             }
 
+            var p = Global.FindPlayer(ctx.Request.Headers["osu-token"]);
 
+            if (p == null) // if they arent part of the player collection, force them to relogin
+            {
+                ctx.Response.StatusCode = 403;
+                ctx.Response.OutputStream.Write(Packets.Packets.SingleIntPacket(5, -5));
+                ctx.Response.Close();
+                return;
+            }
+
+            using (MemoryStream ms = new MemoryStream())
+            using (BinaryReader r = new BinaryReader(ms))
+            {
+                await ctx.Request.InputStream.CopyToAsync(ms);
+                ms.Position = 0;
+                while (ms.Position < ctx.Request.ContentLength64 - 7)
+                {
+                    short Id = r.ReadInt16();
+                    ms.Position += 1;
+                    int Length = r.ReadInt32();
+                    if (ms.Position + Length > ctx.Request.ContentLength64) break;
+                    if (Id == 68 || Id == 79)
+                    {
+                        ms.Position += Length;
+                        continue;
+                    }
+
+                    byte[] Data = r.ReadBytes(Length);
+
+                    switch (Id)
+                    {
+                        case 4: p.Ping = DateTime.Now.Ticks; break;
+                        case 0:
+                            break;
+                        default:
+                            Log.LogFormat($"%#FFFF%Unhandled Packet {Id} with {Length}");
+                            break;
+                    }
+                }
+            }
+
+            if (p.StreamLength != 0) p.StreamCopyTo(ctx.Response.OutputStream);
+            ctx.Response.Close();
         }
     }
 }
