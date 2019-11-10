@@ -59,7 +59,7 @@ namespace zum.Objects
         public List<Player> Spectators { get; set; }
         public Player Spectating { get; set; }
         public MultiplayerLobby Match { get; set; }
-        public bool Relax { get; set; } // note: block set when player is not in idle or afk (getscores most likely wants to set this)
+        public bool Relax { get; private set; } // note: block set when player is not in idle or afk (getscores most likely wants to set this)
         public long Ping { get; set; }
         public bool Bot { get; private set; }
 
@@ -82,6 +82,16 @@ namespace zum.Objects
                 Stream = new MemoryStream();
                 w = new BinaryWriter(Stream);
             }
+        }
+
+        public void SetRelax(bool v)
+        {
+            if (v == Relax) return;
+            if (Action == ActionType.Playing || Action == ActionType.Multiplaying) return;
+            if (Gamemode == 3) return; // mania doesnt have rx
+            Relax = v;
+            Gamemode += (byte)(v ? 4 : -4);
+            Broadcast(Packets.Packets.StatsPacket(this));
         }
 
         public void StreamCopyTo(Stream output)

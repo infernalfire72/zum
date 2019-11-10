@@ -13,7 +13,7 @@ namespace zum.Events
                 p.ActionText = r.ReadString();
                 p.ActionMd5 = r.ReadString();
                 p.ActionMods = r.ReadInt32();
-                p.Relax = (p.ActionMods & 128) != 0;
+                p.SetRelax((p.ActionMods & 128) != 0);
                 p.Gamemode = r.ReadByte();
                 p.ActionBeatmap = r.ReadInt32();
 

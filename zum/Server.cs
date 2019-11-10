@@ -104,7 +104,7 @@ namespace zum
             {
                 await ctx.Request.InputStream.CopyToAsync(ms);
                 ms.Position = 0;
-                while (ms.Position < ctx.Request.ContentLength64 - 7)
+                while (ms.Position < ctx.Request.ContentLength64 - 6)
                 {
                     short Id = r.ReadInt16();
                     ms.Position += 1;
@@ -117,7 +117,6 @@ namespace zum
                     }
 
                     byte[] Data = r.ReadBytes(Length);
-
                     switch (Id)
                     {
                         case 4: p.Ping = DateTime.Now.Ticks; break;
@@ -150,6 +149,27 @@ namespace zum
                             break;
                         case 31:
                             CreateMatch.Handle(p, Data);
+                            break;
+                        case 32:
+                            JoinMatch.Handle(p, Data);
+                            break;
+                        case 33:
+                            LeaveMatch.Handle(p);
+                            break;
+                        case 38:
+                            ChangeSlot.Handle(p, Data);
+                            break;
+                        case 39:
+                            MatchReady.Handle(p);
+                            break;
+                        case 41:
+                            MatchSettings.Handle(p, Data);
+                            break;
+                        case 51:
+                            ModsChange.Handle(p, Data);
+                            break;
+                        case 55:
+                            MatchReady.Handle(p);
                             break;
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);

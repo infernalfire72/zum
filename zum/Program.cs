@@ -8,7 +8,6 @@ namespace zum
         static async Task Main(string[] args)
         {
             Database.ConnectionString = "Server=localhost;Database=dbname;Uid=root;Pwd=password;";
-            if (!await Database.connection.PingAsync()) return;
             Log.WriteLine("Connected to MySQL Server.", Color.LightGreen);
             Global.SetupChannels();
             new Server(5001);

@@ -9,7 +9,7 @@ namespace zum.Events
         {
             MultiplayerLobby m = new MultiplayerLobby(Data);
             m.Creator = m.Host = p.Id;
-            Log.WriteLine($"{p.Username} created a new MultiplayerLobby {m.Name}");
+            Log.LogFormat($"%#00FF44%{p.Username} %#007cee%created a new MultiplayerLobby {m.Name}");
             m.AddPlayer(p, m.Password);
 
             Packet pack = m.Packet(26);

@@ -17,6 +17,7 @@ namespace zum.Events
             p.AddQueue(Packets.Packets.SingleStringPacket(66, "#multiplayer"));
             if (p.Match.Players.Count == 0)
             {
+                p.AddQueue(Packets.Packets.SingleIntPacket(28, p.Match.Id));
                 p.Match.DestroyMatch();
                 return;
             }
