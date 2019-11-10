@@ -174,6 +174,12 @@ namespace zum
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);
                             break;
+                        case 73:
+                            AddFriend.Handle(p, Data);
+                            break;
+                        case 74:
+                            RemoveFriend.Handle(p, Data);
+                            break;
                         case 78:
                             ChannelLeaveEvent.Handle(p, Data);
                             break;
