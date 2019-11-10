@@ -180,6 +180,9 @@ namespace zum
                         case 85:
                             StatsUpdateRequest.Handle(p, Data);
                             break;
+                        case 90:
+                            MatchChangePassword.Handle(p, Data);
+                            break;
                         default:
                             Log.LogFormat($"%#FFFF%Unhandled Packet {Id} with {Length}");
                             break;
