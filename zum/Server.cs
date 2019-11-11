@@ -192,6 +192,9 @@ namespace zum
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);
                             break;
+                        case 70:
+                            ChangeHost.Handle(p, Data);
+                            break;
                         case 73:
                             AddFriend.Handle(p, Data);
                             break;

@@ -15,6 +15,7 @@ namespace zum.Events
 
             p.Match.Players.Remove(p);
             p.AddQueue(Packets.Packets.SingleStringPacket(66, "#multiplayer"));
+            Global.JoinLobby(p); // They tend to be sent to the Lobby Screen after leaving
             if (p.Match.Players.Count == 0)
             {
                 p.AddQueue(Packets.Packets.SingleIntPacket(28, p.Match.Id));

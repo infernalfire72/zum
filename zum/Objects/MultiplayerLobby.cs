@@ -42,7 +42,7 @@ namespace zum.Objects
     {
         public short Id { get; private set; }
         public int Host { get; set; }
-        public int Creator { get; set; }
+        public int Creator { get; set; } // probably only relevant to mp commands like !mp host
         public int BeatmapId { get; set; }
         public int Mods { get; set; }
         public int Seed { get; set; } // For Mania Random

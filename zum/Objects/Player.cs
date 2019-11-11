@@ -176,8 +176,8 @@ namespace zum.Objects
             // Remove from People spectated
             if (p.Spectating != null) StopSpectating.Handle(p);
             // Remove from Lobbies
-            Global.LeaveLobby(p);
             if (p.Match != null) LeaveMatch.Handle(p);
+            Global.LeaveLobby(p);
             // Tell other Players we went away
             Broadcast(Packets.Packets.LogoutPacket(p.Id));
         }
