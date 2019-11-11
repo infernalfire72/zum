@@ -65,6 +65,7 @@ namespace zum.Events
             ctx.Response.Headers["cho-token"] = p.Token;
             w.Write(Packets.Packets.SingleIntPacket(5, Id));
             w.Write(Packets.Packets.SingleIntPacket(75, 19));
+            w.Write(Packets.Packets.SingleIntPacket(71, p.IngamePrivileges));
             w.Write(Packets.Packets.SingleStringPacket(24, $"Welcome to osu!Bancho!\r\nUsing züm 0.1a"));
             await p.GetStats();
             w.Write(Packets.Packets.PresencePacket(p));

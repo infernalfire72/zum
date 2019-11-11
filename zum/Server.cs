@@ -141,6 +141,9 @@ namespace zum
                         case 18:
                             SpectatorFrames.Handle(p, Data);
                             break;
+                        case 25:
+                            IrcMessage.HandlePrivate(p, Data);
+                            break;
                         case 29:
                             Global.LeaveLobby(p);
                             break;
@@ -161,6 +164,9 @@ namespace zum
                             break;
                         case 39:
                             MatchReady.Handle(p);
+                            break;
+                        case 40:
+                            SlotLock.Handle(p, Data);
                             break;
                         case 41:
                             MatchSettings.Handle(p, Data);
@@ -183,6 +189,9 @@ namespace zum
                         case 55:
                             MatchReady.Handle(p);
                             break;
+                        case 56:
+                            MatchFailed.Handle(p);
+                            break;
                         case 59:
                             HasBeatmap.Handle(p);
                             break;
@@ -200,6 +209,9 @@ namespace zum
                             break;
                         case 74:
                             RemoveFriend.Handle(p, Data);
+                            break;
+                        case 77:
+                            ChangeTeam.Handle(p, Data);
                             break;
                         case 78:
                             ChannelLeaveEvent.Handle(p, Data);

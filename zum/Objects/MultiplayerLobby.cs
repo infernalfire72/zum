@@ -168,7 +168,26 @@ namespace zum.Objects
             if (!(r.BaseStream is MemoryStream)) return; // We do not support Reading here
             (r.BaseStream).Position += 2;
             MatchRunning = r.ReadBoolean();
+            byte oldMatchType = MatchType;
             MatchType = r.ReadByte();
+
+            if (oldMatchType != MatchType)
+            {
+                if (MatchType == 2 || MatchType == 3)
+                    for (int i = 0; i < Slots.Length; i++)
+                    {
+                        if (Slots[i].User != null)
+                            Slots[i].Team = (byte)(i % 2 == 0 ? 1 : 2);
+                    }
+                else
+                    for (int i = 0; i < Slots.Length; i++)
+                    {
+                        if (Slots[i].User != null)
+                            Slots[i].Team = 0;
+                    }
+
+            }
+
             Mods = r.ReadInt32();
             Name = r.ReadString();
             Password = r.ReadString();
