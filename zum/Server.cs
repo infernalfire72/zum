@@ -165,11 +165,29 @@ namespace zum
                         case 41:
                             MatchSettings.Handle(p, Data);
                             break;
+                        case 44:
+                            MatchStart.Handle(p, Data);
+                            break;
+                        case 49:
+                            MatchFinished.Handle(p);
+                            break;
                         case 51:
                             ModsChange.Handle(p, Data);
                             break;
+                        case 52:
+                            MatchLoaded.Handle(p);
+                            break;
+                        case 54:
+                            NoBeatmap.Handle(p);
+                            break;
                         case 55:
                             MatchReady.Handle(p);
+                            break;
+                        case 59:
+                            HasBeatmap.Handle(p);
+                            break;
+                        case 60:
+                            MatchSkip.Handle(p);
                             break;
                         case 63:
                             ChannelJoinEvent.Handle(p, Data);

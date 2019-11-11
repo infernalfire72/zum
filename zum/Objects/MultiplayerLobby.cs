@@ -126,6 +126,30 @@ namespace zum.Objects
             return -1;
         }
 
+        public bool CheckLoaded()
+        {
+            for (int i = 0; i < Slots.Length; i++)
+                if (Slots[i].User != null && Slots[i].Status == 32 && !Slots[i].Loaded)
+                    return false;
+            return true;
+        }
+
+        public bool CheckSkip()
+        {
+            for (int i = 0; i < Slots.Length; i++)
+                if (Slots[i].User != null && Slots[i].Status == 32 && !Slots[i].Skipped)
+                    return false;
+            return true;
+        }
+
+        public bool CheckDone()
+        {
+            for (int i = 0; i < Slots.Length; i++)
+                if (Slots[i].User != null && Slots[i].Status == 32 && !Slots[i].Completed)
+                    return false;
+            return true;
+        }
+
         public void DestroyMatch()
         {
             Global.Matches.Remove(this);
